@@ -41,67 +41,12 @@ public class ZebreIntension {
         IntVar par = model.intVar("Parliament", 1, 5);
 
 
-        // Création des contraintes
-        int [][] tEq = new int[][] {{1,1},{2,2},{3,3},{4,4},{5,5}};
-        Tuples tuplesAutorises = new Tuples(tEq,true);		// création de Tuples de valeurs autorisés
-        Tuples tuplesInterdits = new Tuples(tEq,false);		// création de Tuples de valeurs interdits
-
-        model.table(new IntVar[]{blu,gre}, tuplesInterdits).post();
-        // création d'une contrainte en extension de portée <blu,gre>
-        // dont les tuples autorisés/interdits sont données par tuplesInterdits
-        model.table(new IntVar[]{blu,ivo}, tuplesInterdits).post();
-        model.table(new IntVar[]{blu,red}, tuplesInterdits).post();
-        model.table(new IntVar[]{blu,yel}, tuplesInterdits).post();
-        model.table(new IntVar[]{gre,ivo}, tuplesInterdits).post();
-        model.table(new IntVar[]{gre,red}, tuplesInterdits).post();
-        model.table(new IntVar[]{gre,yel}, tuplesInterdits).post();
-        model.table(new IntVar[]{ivo,red}, tuplesInterdits).post();
-        model.table(new IntVar[]{ivo,yel}, tuplesInterdits).post();
-        model.table(new IntVar[]{red,yel}, tuplesInterdits).post();
-
-        model.table(new IntVar[]{eng,jap}, tuplesInterdits).post();
-        model.table(new IntVar[]{eng,nor}, tuplesInterdits).post();
-        model.table(new IntVar[]{eng,spa}, tuplesInterdits).post();
-        model.table(new IntVar[]{eng,ukr}, tuplesInterdits).post();
-        model.table(new IntVar[]{jap,nor}, tuplesInterdits).post();
-        model.table(new IntVar[]{jap,spa}, tuplesInterdits).post();
-        model.table(new IntVar[]{jap,ukr}, tuplesInterdits).post();
-        model.table(new IntVar[]{nor,spa}, tuplesInterdits).post();
-        model.table(new IntVar[]{nor,ukr}, tuplesInterdits).post();
-        model.table(new IntVar[]{spa,ukr}, tuplesInterdits).post();
-
-        model.table(new IntVar[]{cof,mil}, tuplesInterdits).post();
-        model.table(new IntVar[]{cof,ora}, tuplesInterdits).post();
-        model.table(new IntVar[]{cof,tea}, tuplesInterdits).post();
-        model.table(new IntVar[]{cof,wat}, tuplesInterdits).post();
-        model.table(new IntVar[]{mil,ora}, tuplesInterdits).post();
-        model.table(new IntVar[]{mil,tea}, tuplesInterdits).post();
-        model.table(new IntVar[]{mil,wat}, tuplesInterdits).post();
-        model.table(new IntVar[]{ora,tea}, tuplesInterdits).post();
-        model.table(new IntVar[]{ora,wat}, tuplesInterdits).post();
-        model.table(new IntVar[]{tea,wat}, tuplesInterdits).post();
-
-        model.table(new IntVar[]{dog,fox}, tuplesInterdits).post();
-        model.table(new IntVar[]{dog,hor}, tuplesInterdits).post();
-        model.table(new IntVar[]{dog,sna}, tuplesInterdits).post();
-        model.table(new IntVar[]{dog,zeb}, tuplesInterdits).post();
-        model.table(new IntVar[]{fox,hor}, tuplesInterdits).post();
-        model.table(new IntVar[]{fox,sna}, tuplesInterdits).post();
-        model.table(new IntVar[]{fox,zeb}, tuplesInterdits).post();
-        model.table(new IntVar[]{hor,sna}, tuplesInterdits).post();
-        model.table(new IntVar[]{hor,zeb}, tuplesInterdits).post();
-        model.table(new IntVar[]{sna,zeb}, tuplesInterdits).post();
-
-        model.table(new IntVar[]{che,koo}, tuplesInterdits).post();
-        model.table(new IntVar[]{che,luc}, tuplesInterdits).post();
-        model.table(new IntVar[]{che,old}, tuplesInterdits).post();
-        model.table(new IntVar[]{che,par}, tuplesInterdits).post();
-        model.table(new IntVar[]{koo,luc}, tuplesInterdits).post();
-        model.table(new IntVar[]{koo,old}, tuplesInterdits).post();
-        model.table(new IntVar[]{koo,par}, tuplesInterdits).post();
-        model.table(new IntVar[]{luc,old}, tuplesInterdits).post();
-        model.table(new IntVar[]{luc,par}, tuplesInterdits).post();
-        model.table(new IntVar[]{old,par}, tuplesInterdits).post();
+        // Contraintes de non-duplication pour chaque catégorie
+        model.allDifferent(blu, gre, ivo, red, yel).post();
+        model.allDifferent(eng, jap, nor, spa, ukr).post();
+        model.allDifferent(cof, mil, ora, tea, wat).post();
+        model.allDifferent(dog, fox, hor, sna, zeb).post();
+        model.allDifferent(che, koo, luc, old, par).post();
 
 
         /************************************************************************
@@ -110,50 +55,21 @@ public class ZebreIntension {
          *
          ************************************************************************/
 
-        int [][] tNext = new int[][] {{1,2}, {2,1}, {2,3}, {3,2}, {3,4}, {4,3}, {4,5}, {5,4}};
-        int [][] tRight = new int[][] {{1,2}, {2,3},{3,4},{4,5}};
-
-        Tuples tupleNext = new Tuples(tNext, true);
-        Tuples tupleRight = new Tuples(tRight,true);
-
-
-        /* 1ere contrainte */
-
-        model.table(new IntVar[]{eng, red}, tuplesAutorises).post();
-
-        /* 2e contrainte */
-
-        model.table(new IntVar[]{spa,dog}, tuplesAutorises).post();
-
-        /* 3e contrainte */
-
-        model.table(new IntVar[]{cof,gre}, tuplesAutorises).post();
-
-        model.table(new IntVar[]{ukr,tea}, tuplesAutorises).post();
-
-        model.table(new IntVar[]{ivo,gre}, tupleRight).post();
-        model.table(new IntVar[]{old,sna}, tuplesAutorises).post();
-        model.table(new IntVar[]{koo,yel}, tuplesAutorises).post();
-
-        /* 9 */
-        int [][] mid = new int [][] { {3 }};
-        Tuples tupleMid = new Tuples(mid,true);
-        model.table(new IntVar[]{mil}, tupleMid).post();
-
-        /* 10 */
-        int [][] first = new int[][] {{1}};
-        Tuples tupleFirst = new Tuples(first,true);
-        model.table(new IntVar[]{nor}, tupleFirst).post();
-
-        model.table(new IntVar[]{che,fox}, tupleNext).post();
-
-        model.table(new IntVar[]{koo, hor}, tupleNext).post();
-
-        model.table(new IntVar[]{luc,ora}, tuplesAutorises).post();
-
-        model.table(new IntVar[]{jap,par}, tuplesAutorises).post();
-
-        model.table(new IntVar[]{nor,blu}, tupleNext).post();
+        // Phrases 2 à 15 modélisées en contraintes arithmétiques et logiques
+        model.arithm(eng, "=", red).post();            // Phrase 2 : Anglais dans la maison rouge
+        model.arithm(spa, "=", dog).post();            // Phrase 3 : Espagnol avec le chien
+        model.arithm(cof, "=", gre).post();            // Phrase 4 : Café dans la maison verte
+        model.arithm(ukr, "=", tea).post();            // Phrase 5 : Ukrainien boit du thé
+        model.arithm(gre, "=", ivo, "+", 1).post();    // Phrase 6 : Maison verte à droite de l'ivoire
+        model.arithm(old, "=", sna).post();            // Phrase 7 : Old Gold et escargots
+        model.arithm(koo, "=", yel).post();            // Phrase 8 : Kools dans la maison jaune
+        model.arithm(mil, "=", 3).post();              // Phrase 9 : Lait dans la maison du milieu
+        model.arithm(nor, "=", 1).post();              // Phrase 10 : Norvégien dans la première maison
+        model.distance(che,fox, "=", 1).post(); // Phrase 11 : Chesterfields et renard
+        model.distance(koo,hor, "=", 1).post(); // Phrase 12 : Kools et cheval
+        model.arithm(luc, "=", ora).post();            // Phrase 13 : Lucky Strike et jus d'orange
+        model.arithm(jap, "=", par).post();            // Phrase 14 : Japonais et Parliament
+        model.distance(nor,blu, "=", 1).post(); // Phrase 15 : Norvégien et maison bleue
 
 
 
