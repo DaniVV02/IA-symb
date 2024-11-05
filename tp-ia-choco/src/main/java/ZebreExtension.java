@@ -136,12 +136,11 @@ public class ZebreExtension {
         model.table(new IntVar[]{old,sna}, tuplesAutorises).post();
         model.table(new IntVar[]{koo,yel}, tuplesAutorises).post();
 
-        /* 9 */
+
         int [][] mid = new int [][] { {3 }};
         Tuples tupleMid = new Tuples(mid,true);
         model.table(new IntVar[]{mil}, tupleMid).post();
 
-        /* 10 */
         int [][] first = new int[][] {{1}};
         Tuples tupleFirst = new Tuples(first,true);
         model.table(new IntVar[]{nor}, tupleFirst).post();
