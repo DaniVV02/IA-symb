@@ -61,6 +61,7 @@ public class ZebreIntension {
         model.arithm(cof, "=", gre).post();            // Phrase 4 : Café dans la maison verte
         model.arithm(ukr, "=", tea).post();            // Phrase 5 : Ukrainien boit du thé
         model.arithm(gre, "=", ivo, "+", 1).post();    // Phrase 6 : Maison verte à droite de l'ivoire
+        //model.arithm(gre, "=", (IntVar) ivo.add(1)).post();
         model.arithm(old, "=", sna).post();            // Phrase 7 : Old Gold et escargots
         model.arithm(koo, "=", yel).post();            // Phrase 8 : Kools dans la maison jaune
         model.arithm(mil, "=", 3).post();              // Phrase 9 : Lait dans la maison du milieu

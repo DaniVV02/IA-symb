@@ -32,6 +32,7 @@ public class nReine {
 
             // Résolution
             if (model.getSolver().solve()) {
+                System.out.println("Solution trouvée :");
                 do {
                     for (int i = 0; i < n; i++) {
                         System.out.print("Reine en ligne " + (i + 1) + " colonne " + reines[i].getValue() + "; ");

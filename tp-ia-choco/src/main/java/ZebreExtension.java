@@ -11,6 +11,8 @@ public class ZebreExtension {
 		Model model = new Model("Zebre");
 		
 		// Création des variables
+        // Ces variables représentent les couleurs des maisons.
+        // Le domaine [1, 5] signifie que chaque couleur peut être associée à une des cinq maisons (numérotées de 1 à 5).
 		IntVar blu = model.intVar("Blue", 1, 5);	// blu est une variable entière dont le nom est "Blue" est le domaine [1,5]
 		IntVar gre = model.intVar("Green", 1, 5); 
 		IntVar ivo = model.intVar("Ivory", 1, 5);         
@@ -46,8 +48,13 @@ public class ZebreExtension {
         int [][] tEq = new int[][] {{1,1},{2,2},{3,3},{4,4},{5,5}};
         Tuples tuplesAutorises = new Tuples(tEq,true);		// création de Tuples de valeurs autorisés
         Tuples tuplesInterdits = new Tuples(tEq,false);		// création de Tuples de valeurs interdits
-        
+
         model.table(new IntVar[]{blu,gre}, tuplesInterdits).post();
+
+        // Cela signifie que la maison bleue et la maison verte ne peuvent pas avoir le même numéro (position).
+        //Ces contraintes sont répétées pour toutes les combinaisons possibles de variables,
+        // afin de garantir l'unicité des caractéristiques pour chaque maison.
+
         // création d'une contrainte en extension de portée <blu,gre>
         // dont les tuples autorisés/interdits sont données par tuplesInterdits
         model.table(new IntVar[]{blu,ivo}, tuplesInterdits).post();
@@ -130,20 +137,36 @@ public class ZebreExtension {
 
         model.table(new IntVar[]{cof,gre}, tuplesAutorises).post();
 
+        /* 4e contrainte */
+
         model.table(new IntVar[]{ukr,tea}, tuplesAutorises).post();
 
+        /* 5e contrainte */
+
         model.table(new IntVar[]{ivo,gre}, tupleRight).post();
+
+
+        /* 6e contrainte */
+
         model.table(new IntVar[]{old,sna}, tuplesAutorises).post();
+
+        /* 7e contrainte */
+
         model.table(new IntVar[]{koo,yel}, tuplesAutorises).post();
 
+        /* 8e contrainte */
 
         int [][] mid = new int [][] { {3 }};
         Tuples tupleMid = new Tuples(mid,true);
         model.table(new IntVar[]{mil}, tupleMid).post();
 
+        /* 9e contrainte */
+
         int [][] first = new int[][] {{1}};
         Tuples tupleFirst = new Tuples(first,true);
         model.table(new IntVar[]{nor}, tupleFirst).post();
+
+        /* 10e contrainte */
 
         model.table(new IntVar[]{che,fox}, tupleNext).post();
 
