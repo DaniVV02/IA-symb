@@ -122,3 +122,46 @@ Cette approche est similaire à celle utilisée pour le puzzle du zèbre :
 - Vous avez cherché une solution avec un solveur de CSP (Choco Solver).
 
 Les concepts restent donc les mêmes, mais le problème est différent : ici, il s'agit d'un problème classique de positionnement, tandis que le puzzle du zèbre est un problème de logique.
+
+## Sudoku
+
+### Modélisation du problème du Sudoku avec Choco Solver
+
+Le Sudoku est un puzzle où une grille de 9×99×9 doit être remplie avec des chiffres de 1 à 9 de telle sorte que :
+
+- Chaque ligne contienne des chiffres différents.
+- Chaque colonne contienne des chiffres différents.
+- Chaque sous-grille 3×33×3 contienne des chiffres différents.
+
+Nous allons créer une classe Java appelée SudokuSolver qui utilise Choco Solver pour modéliser et résoudre le problème.
+
+Étape 1 : Définition des variables
+
+Nous avons besoin d'une matrice 9×99×9 de variables entières, où chaque variable représente une cellule de la grille, avec un domaine de [1,9][1,9].
+
+Étape 2 : Contraintes pour les lignes
+
+Chaque ligne doit contenir des valeurs différentes. Nous utilisons la contrainte allDifferent pour chaque ligne.
+
+Étape 3 : Contraintes pour les colonnes
+
+Chaque colonne doit contenir des valeurs différentes. Nous utilisons également la contrainte allDifferent pour chaque colonne.
+
+Étape 4 : Contraintes pour les sous-grilles 3×33×3
+
+Pour chaque sous-grille 3×33×3, nous devons imposer la contrainte allDifferent.
+
+
+### Explication du code
+
+- Modèle : Création d'un modèle pour le Sudoku.
+- Variables : Définition d'une matrice 9×99×9 de variables entières avec un domaine [1,9][1,9].
+- Contraintes :
+    Utilisation de allDifferent pour chaque ligne, colonne et sous-grille 3×33×3.
+- Grille d'entrée : Exemple de grille partiellement remplie où 0 représente une cellule vide.
+- Résolution : Utilisation de model.getSolver().solve() pour trouver une solution.
+- Affichage : Affichage de la solution trouvée.
+
+Résultats et observations
+
+Le solveur trouvera une solution valide pour la grille d’entrée fournie, en respectant les règles du Sudoku. Vous pouvez tester avec différentes grilles d’entrée.
