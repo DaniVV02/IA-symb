@@ -32,16 +32,52 @@ public class Expe {
 
     public static void main(String[] args) throws Exception{
         String ficName = "bench.txt";
+        String ficName2 = "benchSatisf.txt";
+        String ficName3 = "benchInsat.txt";
+
         int nbRes=3;
+
         BufferedReader readFile = new BufferedReader(new FileReader(ficName));
+        BufferedReader readFile2 = new BufferedReader(new FileReader(ficName2));
+        BufferedReader readFile3 = new BufferedReader(new FileReader(ficName3));
+        int nbSol =0;
+        int nbSol1 = 0;
+        int nbSol2=0;
         for(int nb=1 ; nb<=nbRes; nb++) {
             Model model=lireReseau(readFile);
-            if(model==null) {
+            Model model2=lireReseau(readFile2);
+            Model model3=lireReseau(readFile3);
+            if(model==null || model2==null || model3==null) {
                 System.out.println("Problème de lecture de fichier !\n");
                 return;
             }
-            System.out.println("Réseau lu "+nb+" :\n"+model+"\n\n");
+            System.out.println("Bench : Réseau lu "+nb+" :\n"+model+"\n\n");
+            if (model.getSolver().solve()) {
+                nbSol1++;
+                System.out.println("Nombre de solutions " + model.getSolver().getSolutionCount());
+
+            }
+            System.out.println("---------------------------------");
+            System.out.println("Bench Satisf : Réseau lu "+nb+" :\n"+model2+"\n\n" );
+            if (model2.getSolver().solve()) {
+                nbSol++;
+                System.out.println("Nombre de solutions : " + model2.getSolver().getSolutionCount());
+
+            }
+            System.out.println("---------------------------------");
+            System.out.println("Bench Insat : Réseau lu "+nb+" :\n"+model3+"\n\n" );
+            if (model3.getSolver().solve()) {
+                nbSol2++;
+                System.out.println("Nombre de solutions : " + model3.getSolver().getSolutionCount());
+
+            }
+
         }
+        System.out.println("\n Le nombre de réseaux satisfiables pour bench est : "+ nbSol1);
+
+        System.out.println("\n Le nombre de réseaux satisfiables pour benchSatisf est : "+ nbSol);
+
+        System.out.println("\n Le nombre de réseaux satisfiables pour benchInsat est : "+ nbSol2);
         return;
     }
 
