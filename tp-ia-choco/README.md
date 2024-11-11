@@ -165,3 +165,52 @@ Pour chaque sous-grille 3×33×3, nous devons imposer la contrainte allDifferent
 Résultats et observations
 
 Le solveur trouvera une solution valide pour la grille d’entrée fournie, en respectant les règles du Sudoku. Vous pouvez tester avec différentes grilles d’entrée.
+
+
+### GRAPH coloring
+
+Explication du code :
+
+Nous définissons un graphe avec 4 sommets et une matrice d'adjacence pour indiquer quelles paires de sommets sont reliées.
+Les variables de couleur sont créées, où chaque sommet peut être colorié avec une couleur entre 1 et 3.
+Des contraintes sont ajoutées pour interdire que des sommets adjacents aient la même couleur (basé sur la matrice d'adjacence).
+Le solveur tente de trouver une solution où tous les sommets ont des couleurs différentes pour les voisins adjacents.
+
+Le problème de coloration de graphe utilise des variables de couleur et des contraintes pour s'assurer que les sommets adjacents n'ont pas la même couleur.
+
+### Magic square
+
+Explication du code :
+
+Nous définissons la taille du carré magique (n=3n=3 dans cet exemple).
+Le modèle est créé avec Choco Solver et des variables entières sont utilisées pour représenter chaque case du carré magique.
+Les contraintes sont ajoutées :
+    Chaque ligne, colonne et diagonale doit avoir la même somme.
+    Chaque nombre entre 1 et n2n2 doit être unique.
+Le solveur tente de trouver une solution qui satisfait toutes les contraintes.
+
+
+Le problème du carré magique utilise des contraintes de somme et d'unicité sur une grille de variables pour s'assurer que chaque ligne, colonne et diagonale ait la même somme.
+
+### SAT
+
+Explication du code :
+
+Variables booléennes :
+    Nous créons trois variables booléennes x1, x2, et x3à l'aide de la méthode boolVar(). Chaque variable peut prendre la valeur True ou False.
+Clauses :
+    Clause 1 : (x1∨x2) Nous utilisons la méthode or() pour spécifier que cette clause est vraie si x1 ou x2 est vrai.
+    Clause 2 : (¬x1∨x3) Ici, nous utilisons not(x_1) pour obtenir la négation de x1 et la combinons avec x3.
+    Clause 3 : (x2∨¬x3) Nous utilisons la même approche pour la négation de x3 avec x2
+Résolution :
+    Le solveur est utilisé pour tenter de trouver une solution qui satisfasse toutes les clauses en même temps. Si une solution est trouvée, nous affichons les valeurs de x1x1​, x2x2​, et x3x3​. Si aucune solution n'existe, nous affichons un message indiquant qu'il n'y a pas de solution.
+
+Analyse :
+
+Ce modèle correspond à une instance basique du problème SAT. La formule CNF donnée est simple et résolue en une recherche d'affectations des variables. Le problème SAT devient plus complexe lorsque le nombre de variables et de clauses augmente.
+
+Ce code peut être étendu à des instances plus complexes en ajoutant plus de variables et de clauses.
+
+Conclusion :
+
+Le problème SAT est une problématique fondamentale en informatique théorique et en logique, utilisée dans de nombreuses applications comme la vérification de modèles, l'optimisation, et la planification. Le code ci-dessus montre comment utiliser Choco Solver pour résoudre un problème SAT en définissant des variables booléennes et des contraintes sur ces variables. Si vous souhaitez modéliser un problème SAT plus complexe, il suffit d'ajouter davantage de variables et de clauses selon la formule CNF que vous souhaitez tester.
